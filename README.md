@@ -32,7 +32,7 @@ sudo mount -t cifs -o username=boning,password=follow-HARD-pair-short-2,uid=1000
 `10.0.10.11` is the IP address of VVOX-NAS-1. For unknown reason the `VVOX-NAS-1.local` sometimes having resolving issue on one of the machine, even after `sudo nano /etc/hosts` and add line `10.0.10.11 VVOX-NAS-1.local`
 I've constantly met permission issue with NFS mounting so I switched to SMB.
 
-### Automatically Mount at Startup:
+### Automatically Mount at Startup:   
 #### 1. Edit the /etc/fstab File
 To set up automatic mounting on startup, edit the `/etc/fstab` file
 ```
@@ -65,31 +65,43 @@ sudo snap install nmap
 
 ## 3. Houdini
 #### Dependencies:
-Install these dependencies before launching Houdini:
+Houdini linux dependencies:
 ```
-sudo apt install libgl1 libglu1-mesa libglx0 libice6 libopengl0 libsm6 libx11-6 libx11-xcb1 libxcb-icccm4 libxcb-image0 libxcb-keysyms1 libxcb-randr0 libxcb-render-util0 libxcb-render0 libxcb-shape0 libxcb-shm0 libxcb-sync1 libxcb-util1 libxcb-xfixes0 libxcb-xinerama0 libxcb-xkb1 libxcb1 libxext6 libxkbcommon-x11-0 libxkbcommon0 libxt6
+sudo dnf install alsa-lib compat-openssl11 dbus-libs expat fontconfig glibc libatomic libevent libglvnd-glx libglvnd-opengl libICE libSM libX11 libX11-xcb libxcb libXcomposite libXcursor libXdamage libXext libXfixes libXi libxkbcommon libxkbcommon-x11 libXrandr libXrender libXScrnSaver libXt libXtst libzstd nspr nss nss-util openldap pciutils-libs tbb xcb-util xcb-util-image xcb-util-keysyms xcb-util-renderutil xcb-util-wm zlib 
 ```
 #### Installing HQueue Client
 Current HQueue server and port is : http://10.0.10.203:5000 (Box-1) 
 #### Environment Variables:
+For complete environment variable list: https://www.sidefx.com/docs/houdini/ref/env.html
+
 **Deadline needs these lines to work (Only on Linux):**
 ```
 DEADLINE_PATH="/opt/Thinkbox/Deadline10/bin"
 PATH=$PATH:$DEADLINE_PATH
 ```
 **To set a directory as global attribute:**
+
 **Linux:**
 ```
 ASSETS="/mnt/VVOX-NAS-1/projects/_____ASSETS"
 ```
 **Windows**
 ```
-ASSETS="\\Vvox-nas-1\projects\_____ASSETS"
+ASSETS="//Vvox-nas-1/projects/_____ASSETS"
+```
+
+*Note:* For daily-build after 20.5.395, there's an internel environment variable to disable the CUDA pin host memory feature. This feature will likely to cause the multi-gpu machine fail on allocating the host memory when rendering high resolution image.
+
+**Recommand to have this set for multi-gpu machine.**
+```
+KARMA_XPU_OPTIX_DISABLE_HOST_PINNED = 1
 ```
 **Other useful environment variables:**
 ```
 #Disable CPU for XPU
-KARMA_XPU_DISABLE_EMBREE_DEVICE=1
+#KARMA_XPU_DISABLE_EMBREE_DEVICE=1 #traditional method
+KARMA_XPU_DEVICE = optix #new method, introduced in 20.5.394
+
 
 #Disable Specific GPU for XPU 
 KARMA_XPU_DISABLE_DEVICE_n=1
