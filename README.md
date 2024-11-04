@@ -60,6 +60,7 @@ sudo mount -a
 ---
 
 ## 2. Packages to Install
+
 ```
 sudo apt install flatpak timeshift vlc imagemagick
 sudo snap install mission-center
@@ -70,7 +71,10 @@ sudo snap install nmap
 
 ## 3. Houdini
 #### Dependencies:
-Houdini linux dependencies:
+Linux package requirements for Houdini 20.5:
+
+https://www.sidefx.com/Support/system-requirements/linux-package-requirements-for-houdini-205/
+
 ```
 sudo dnf install alsa-lib compat-openssl11 dbus-libs expat fontconfig glibc libatomic libevent libglvnd-glx libglvnd-opengl libICE libSM libX11 libX11-xcb libxcb libXcomposite libXcursor libXdamage libXext libXfixes libXi libxkbcommon libxkbcommon-x11 libXrandr libXrender libXScrnSaver libXt libXtst libzstd nspr nss nss-util openldap pciutils-libs tbb xcb-util xcb-util-image xcb-util-keysyms xcb-util-renderutil xcb-util-wm zlib 
 ```
