@@ -1,4 +1,9 @@
-# linux-renderfarm-docs
+# Linux Render Farm Setup Guide
+
+A practical guide for setting up and managing a Linux-based render farm, primarily documented from personal implementation. While originally configured for use with Volvoxlabs's infrastructure, this documentation can be adapted for different environments. The examples use specific network paths and studio configurations which should be modified according to your setup. This guide assumes basic familiarity with Linux systems and render farm concepts.
+
+> **Note:** Path examples and certain configurations reference personal/studio-specific setups and should be adjusted for your environment.
+
 
 ## 1. Mount NAS Folder
 
