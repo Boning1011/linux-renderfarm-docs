@@ -67,6 +67,13 @@ sudo snap install mission-center
 sudo snap install nmap
 ```
 
+#### To solve Houdini crash on Fedora 41:
+
+```
+sudo dnf install gnome-session-xsession
+```
+Then restart and choose the Xorg version of Gnome on the login screen.
+
 ---
 
 ## 3. Houdini
@@ -101,7 +108,7 @@ ASSETS="//Vvox-nas-1/projects/_____ASSETS"
 
 *Note:* For daily-build after 20.5.395, there's an internel environment variable to disable the CUDA pin host memory feature. This feature will likely to cause the multi-gpu machine fail on allocating the host memory when rendering high resolution image.
 
-**Recommand to have this set for multi-gpu machine.**
+**For multi-gpu machine failed on render high-res image**
 ```
 KARMA_XPU_OPTIX_DISABLE_HOST_PINNED = 1
 ```
