@@ -74,6 +74,9 @@ sudo dnf install gnome-session-xsession
 ```
 Then restart and choose the Xorg version of Gnome on the login screen.
 
+*Note:* User from community mention that after 20.5.4xx with Qt6, Houdini is less crashy on fedora 41.
+
+
 ---
 
 ## 3. Houdini
