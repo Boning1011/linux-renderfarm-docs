@@ -99,12 +99,15 @@ ASSETS="/mnt/VVOX-NAS-1/projects/_____ASSETS"
 ASSETS="//Vvox-nas-1/projects/_____ASSETS"
 ```
 
-*Note:* For daily-build after 20.5.395, there's an internel environment variable to disable the CUDA pin host memory feature. This feature will likely to cause the multi-gpu machine fail on allocating the host memory when rendering high resolution image.
+
 
 **For multi-gpu machine failed on render high-res image**
 ```
 KARMA_XPU_OPTIX_DISABLE_HOST_PINNED = 1
 ```
+
+*Note: For daily-build after 20.5.395, there's an internel environment variable to disable the CUDA pin host memory feature. This feature will likely to cause the multi-gpu machine fail on allocating the host memory when rendering high resolution image.* 
+
 **Other useful environment variables:**
 ```
 #Disable CPU for XPU
@@ -131,8 +134,8 @@ Houdini crashes on startup when launched through GUI on multi-GPU systems, likel
 Launch from terminal:
 
 ```
-export __GLX_VENDOR_LIBRARY_NAME=nvidia
-houdini
+export __GLX_VENDOR_LIBRARY_NAME = nvidia
+/opt/hfs20.5.445/bin/houdini
 ```
 *Caution: directly adding __GLX_VENDOR_LIBRARY_NAME=nvidia to /etc/environment can casue Teamviewer can't connect properly*
 
