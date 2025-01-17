@@ -67,16 +67,6 @@ sudo snap install mission-center
 sudo snap install nmap
 ```
 
-#### To solve Houdini crash on Fedora 41:
-
-```
-sudo dnf install gnome-session-xsession
-```
-Then restart and choose the Xorg version of Gnome on the login screen.
-
-*Note:* User from community mention that after 20.5.4xx with Qt6, Houdini is less crashy on fedora 41.
-
-
 ---
 
 ## 3. Houdini
@@ -129,8 +119,31 @@ KARMA_XPU_DISABLE_DEVICE_n=1
 KARMA_XPU_NUM_PER_DEVICE_BLENDING_THREADS = 4
 
 #Use Box1 as HQueue Server
-HOUDINI_HQUEUE_SERVER = http://10.0.10.203:5000/ 
+HOUDINI_HQUEUE_SERVER = http://10.0.10.203:5000/
 ```
+
+### Trouble Shooting Houdini Crash on Startup:
+
+Houdini crashes on startup when launched through GUI on multi-GPU systems, likely due to GLX/OpenGL initialization issues.
+
+#### Quick Fix:
+
+Launch from terminal:
+
+```
+export __GLX_VENDOR_LIBRARY_NAME=nvidia
+houdini
+```
+*Caution: directly adding __GLX_VENDOR_LIBRARY_NAME=nvidia to /etc/environment can casue Teamviewer can't connect properly*
+
+### (Untested)To solve Houdini crash on Fedora(Wayland):
+
+```
+sudo dnf install gnome-session-xsession
+```
+Then restart and choose the Xorg version of Gnome on the login screen.
+
+*Note: Developers said they are planning to add support on Wayland in Houdini 21 with Qt6 build. User from community with 20.5.473 Qt6 runs relatively stable with minor bugs.* 
 
 
 ---
