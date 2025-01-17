@@ -101,12 +101,12 @@ ASSETS="//Vvox-nas-1/projects/_____ASSETS"
 
 
 
-**For multi-gpu machine failed on render high-res image**
+**For multi-gpu machine failed on render high-res image:**
 ```
 KARMA_XPU_OPTIX_DISABLE_HOST_PINNED = 1
 ```
 
-*Note: For daily-build after 20.5.395, there's an internel environment variable to disable the CUDA pin host memory feature. This feature will likely to cause the multi-gpu machine fail on allocating the host memory when rendering high resolution image.* 
+*Note: For daily-build after 20.5.395, this environment variable added as an internal debbug to disable the CUDA pin host memory feature. This feature will likely to cause the multi-gpu machine fail on allocating the host memory when rendering high resolution image.* 
 
 **Other useful environment variables:**
 ```
