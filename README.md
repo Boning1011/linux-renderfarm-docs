@@ -30,8 +30,8 @@ sudo chown yourusername:yourusername /mnt/VVOX-NAS-1/your_folder_name
 #### 2. Mount a Folder 
 Use the following command to mount a folder with your NAS credentials:
 ```
-sudo mount -t cifs -o username=boning,password=follow-HARD-pair-short-2,uid=1000,gid=1000,dir_mode=0777,file_mode=0777,vers=3.0 //10.0.10.11/PROJECTS /mnt/VVOX-NAS-1/projects
-sudo mount -t cifs -o username=boning,password=follow-HARD-pair-short-2,uid=1000,gid=1000,dir_mode=0777,file_mode=0777,vers=3.0 //10.0.10.11/deadline10-repo /mnt/VVOX-NAS-1/deadline-repo
+sudo mount -t cifs -o username=myusername,password=mypassword,uid=1000,gid=1000,dir_mode=0777,file_mode=0777,vers=3.0 //10.0.10.11/PROJECTS /mnt/VVOX-NAS-1/projects
+sudo mount -t cifs -o username=myusername,password=mypassword,uid=1000,gid=1000,dir_mode=0777,file_mode=0777,vers=3.0 //10.0.10.11/deadline10-repo /mnt/VVOX-NAS-1/deadline-repo
 ``` 
 **Note:**
 `10.0.10.11` is the IP address of VVOX-NAS-1. For unknown reason the `VVOX-NAS-1.local` sometimes having resolving issue on one of the machine, even after `sudo nano /etc/hosts` and add line `10.0.10.11 VVOX-NAS-1.local`
@@ -46,8 +46,8 @@ sudo nano /etc/fstab
 #### 2.  Add the Mount Entries
 Append the following line:
 ```
-//10.0.10.11/PROJECTS /mnt/VVOX-NAS-1/projects cifs username=boning,password=follow-HARD-pair-short-2,uid=1000,gid=1000,dir_mode=0755,file_mode=0755 0 0
-//10.0.10.11/deadline10-repo /mnt/VVOX-NAS-1/deadline-repo cifs username=boning,password=follow-HARD-pair-short-2,uid=1000,gid=1000,dir_mode=0755,file_mode=0755 0 0
+//10.0.10.11/PROJECTS /mnt/VVOX-NAS-1/projects cifs username=myusername,password=mypassword,uid=1000,gid=1000,dir_mode=0755,file_mode=0755 0 0
+//10.0.10.11/deadline10-repo /mnt/VVOX-NAS-1/deadline-repo cifs username=myusername,password=mypassword,uid=1000,gid=1000,dir_mode=0755,file_mode=0755 0 0
 ```
 #### 3. Test the Configuration
 To verify the settings, run:
