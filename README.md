@@ -153,18 +153,17 @@ Then restart and choose the Xorg version of Gnome on the login screen.
 
 ## 4. Troubleshooting Deadline Issues
 
-1. **Problem:** Deadline Monitor or Worker Fails to Start
+1. **Deadline Monitor or Worker Fails to Start**
     - **Possible Cause:** `deadline-repo` may not be mounted correctly.
     - **Solution:** Verify that `deadline-repo` is mounted at `/mnt/VVOX-NAS-1/deadline-repo`. Remount if necessary.
-2. **Problem:** Incorrect Path Mapping Between Windows and Linux
+2. **Incorrect Path Mapping Between Windows and Linux**
     - **Cause:** Mapped Paths in `Configure Repository Options` are not set up correctly.
     - **Solution:** Ensure the following mapping is configured:
         - From `\\vvox-nas-1\projects\` ➜ To `/mnt/VVOX-NAS-1/projects/`
         - _Note:_ Changes may take a few minutes to take effect.
-3. **Problem:** Worker Displays as "Stalled"
-    - **Possible Causes:**
-        - Worker process is not running.
-        - System issues causing the worker to stop unexpectedly.
-    - **Solutions:**
-        - Log in to the machine to check if the worker is active. Manually start it if needed.
-        - If the worker fails to launch, try restarting the system and check again.
+3. **Worker Displays as "Stalled"**
+    - **Solutions:** While restart can solve the issue, there's an even simpler way:
+        ```
+        sudo systemctl restart systemd-resolved
+        ```
+        
