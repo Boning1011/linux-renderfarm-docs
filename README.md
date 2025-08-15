@@ -129,13 +129,18 @@ HOUDINI_HQUEUE_SERVER = http://10.0.10.203:5000/
 
 Houdini crashes on startup when launched on headless machine.
 
-#### Solution 1:
+#### Solution 1 - Dongle
 
-Plug in a headless dongle and then restart.
+Using a headless dongle and then restart. Potential issue is the dongle isn't maintaining a stable X11 session when the real monitor disconnects. 
 
-#### Solution 2:
+Try congfigure dongle BEFORE disconnecting monitor:
 
-Launch from terminal:
+```
+xrandr --output [DONGLE_NAME] --mode 1920x1080 --primary
+xrandr --output [MONITOR_NAME] --off
+```
+
+#### Solution 2 - Launch from terminal:
 
 ```
 export __GLX_VENDOR_LIBRARY_NAME=nvidia
@@ -144,6 +149,27 @@ export __GLX_VENDOR_LIBRARY_NAME=nvidia
 *Caution: DO NOT directly adding __GLX_VENDOR_LIBRARY_NAME=nvidia to /etc/environment, which will casue Teamviewer unable to connect*
 
 *Note: When connected to a monitor, launch in terminal in the way above with casue GLX context conflict, resulting black GUI.*
+
+#### Solution 3 - Use virtual display instead of dongle:
+```
+# Install virtual framebuffer
+sudo apt install xvfb
+
+# Create startup script for headless operation
+sudo nano /etc/systemd/system/headless-display.service
+```
+```
+[Unit]
+Description=Headless Display
+After=graphical.target
+
+[Service]
+ExecStart=/usr/bin/Xvfb :0 -screen 0 1920x1080x24
+Restart=always
+
+[Install]
+WantedBy=graphical.target
+```
 
 ### (Untested)To solve Houdini crash on Fedora(Wayland):
 
