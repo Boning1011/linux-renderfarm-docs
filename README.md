@@ -127,17 +127,23 @@ HOUDINI_HQUEUE_SERVER = http://10.0.10.203:5000/
 
 ### Trouble Shooting Houdini Crash on Startup:
 
-Houdini crashes on startup when launched through GUI on multi-GPU systems, likely due to GLX/OpenGL initialization issues.
+Houdini crashes on startup when launched on headless machine.
 
-#### Quick Fix:
+#### Solution 1:
+
+Plug in a headless dongle and then restart.
+
+#### Solution 2:
 
 Launch from terminal:
 
 ```
-export __GLX_VENDOR_LIBRARY_NAME = nvidia
+export __GLX_VENDOR_LIBRARY_NAME=nvidia
 /opt/hfs20.5.445/bin/houdini
 ```
-*Caution: directly adding __GLX_VENDOR_LIBRARY_NAME=nvidia to /etc/environment can casue Teamviewer can't connect properly*
+*Caution: DO NOT directly adding __GLX_VENDOR_LIBRARY_NAME=nvidia to /etc/environment, which will casue Teamviewer unable to connect*
+
+*Note: When connected to a monitor, launch in terminal in the way above with casue GLX context conflict, resulting black GUI.*
 
 ### (Untested)To solve Houdini crash on Fedora(Wayland):
 
