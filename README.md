@@ -70,7 +70,7 @@ sudo snap install nmap
 ---
 
 ## 3. Houdini
-#### Dependencies:
+### Dependencies:
 Linux package requirements for Houdini 20.5:
 
 https://www.sidefx.com/Support/system-requirements/linux-package-requirements-for-houdini-205/
@@ -78,9 +78,20 @@ https://www.sidefx.com/Support/system-requirements/linux-package-requirements-fo
 ```
 sudo dnf install alsa-lib compat-openssl11 dbus-libs expat fontconfig glibc libatomic libevent libglvnd-glx libglvnd-opengl libICE libSM libX11 libX11-xcb libxcb libXcomposite libXcursor libXdamage libXext libXfixes libXi libxkbcommon libxkbcommon-x11 libXrandr libXrender libXScrnSaver libXt libXtst libzstd nspr nss nss-util openldap pciutils-libs tbb xcb-util xcb-util-image xcb-util-keysyms xcb-util-renderutil xcb-util-wm zlib 
 ```
-#### Installing HQueue Client
-Current HQueue server and port is : http://10.0.10.203:5000 (Box-1) 
-#### Environment Variables:
+### HQueue
+To make sure the HQueue working properly, the two main env variables are: `HOUDINI_HQUEUE_SERVER` and `HOUDINI_HQUEUE_HFS`, one of the most common error is due to the client machine don't have corresponding minor houdini version installed. To solve this, managing the config through centralized packages is highly recommended.
+
+#### Things to Check
+
+1. The client machines are shown available on HQueue dashboard 
+
+2. Make sure all machines env are properly shared and managed
+
+3. `HOUDINI_HQUEUE_HFS` is set correctly.
+
+Then TOP hqscheduler should likely work with all default parameters.
+
+### Environment Variables:
 For complete environment variable list: https://www.sidefx.com/docs/houdini/ref/env.html
 
 **Deadline needs these lines to work (Only on Linux):**
