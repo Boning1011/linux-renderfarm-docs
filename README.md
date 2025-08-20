@@ -81,15 +81,35 @@ sudo dnf install alsa-lib compat-openssl11 dbus-libs expat fontconfig glibc liba
 ### HQueue
 To make sure the HQueue working properly, the two main env variables are: `HOUDINI_HQUEUE_SERVER` and `HOUDINI_HQUEUE_HFS`, one of the most common error is due to the client machine don't have corresponding minor houdini version installed. To solve this, managing the config through centralized packages is highly recommended.
 
-#### Things to Check
+#### Basic Things to Check
 
 1. The client machines are shown available on HQueue dashboard 
 
 2. Make sure all machines env are properly shared and managed
 
-3. `HOUDINI_HQUEUE_HFS` is set correctly.
+3. HFS Path is set correctly. *Note: Using `HOUDINI_HQUEUE_HFS_LINUX` is recommended since `HOUDINI_HQUEUE_HFS` will pass the current working HFS to Hqueue(in this case the Windows) resulting linux machine can find hython.*
 
-Then TOP hqscheduler should likely work with all default parameters.
+Then TOP hqscheduler should likely work with all default parameters(on Windows clients).
+
+#### Linux HQueue Client
+
+In order to let linux client successfully pick and run a job, there're 2 main steps: 
+
+1. Find the hython to use (HFS)
+
+2. Find the .hip to open (HQueue path mapping)
+
+The first step should work if the `HOUDINI_HQUEUE_HFS_LINUX` is set correctly. The 2nd step similar to setting the path mapping in deadline. Adding these lines to the `network_folders.ini` in server machine to ensure linux client know where to open .hip:
+
+```
+[MY_PROJECT_FOLDER] 
+windows = \\Vvox-nas-1\PROJECTS
+linux = /mnt/VVOX-NAS-1/projects
+```
+
+`windows =` set the path to be replaced, `linux = ` set the path to be turned into. Any typo in these 2 lines will result in the path mapping not working.
+
+*Note: while adding lines in `[job_environment]` on client's `hqnode.ini` does the 2nd step of path mapping , it's recommended to set all on the server side and leave the client's `[job_environment]` blank*
 
 ### Environment Variables:
 For complete environment variable list: https://www.sidefx.com/docs/houdini/ref/env.html
