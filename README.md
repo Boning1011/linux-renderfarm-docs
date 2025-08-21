@@ -230,8 +230,10 @@ Then restart and choose the Xorg version of Gnome on the login screen.
         sudo systemctl restart systemd-resolved
         ```
 4. **PDG Deadline Scheduler**
-   - error: This command does not support “RunCommandForRepository”
-        Great Clayton Krause from Thinkbox forum provided this solution and worked for me: 
+   - Error: "This command does not support 'RunCommandForRepository'"
+     
+        Great Clayton Krause from Thinkbox forum provided this solution and worked for me:
+     
         >Firstly, IT had to open up some ports on our internal network.
         >
         >From there, the ports had to be set on the DeadlinesSchedular -
