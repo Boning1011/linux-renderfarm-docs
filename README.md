@@ -229,4 +229,18 @@ Then restart and choose the Xorg version of Gnome on the login screen.
         ```
         sudo systemctl restart systemd-resolved
         ```
+4. **PDG Deadline Scheduler**
+   - error: This command does not support “RunCommandForRepository”
+        Great Clayton Krause from Thinkbox forum provided this solution and worked for me: 
+        >Firstly, IT had to open up some ports on our internal network.
+        >
+        >From there, the ports had to be set on the DeadlinesSchedular -
+        >
+        >Parms below under ‘Message Queue’ Tab. Both parms had to be enabled as well via the toggle next to them:
+        >
+        >taskcallbackport
+        >
+        >mqrelayport
+        >
+        >After setting ports (assuming your environment requires you to open up specific ones for this as mine did), I had to toggle on “Inherit Local Environment” for both the Task Environment and Deadline Command Environment (deadline_inheritlocalenv & deadline_cmdinheritlocalenv) and under “Job Parms” tab as for some reason the environment wasn’t right.
         
