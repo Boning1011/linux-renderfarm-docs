@@ -99,17 +99,33 @@ In order to let linux client successfully pick and run a job, there're 2 main st
 
 2. Find the .hip to open (HQueue path mapping)
 
-The first step should work if the `HOUDINI_HQUEUE_HFS_LINUX` is set correctly. The 2nd step similar to setting the path mapping in deadline. Adding these lines to the `network_folders.ini` in server machine to ensure linux client know where to open .hip:
+The first step should work if the `HOUDINI_HQUEUE_HFS_LINUX` is set correctly. The 2nd step similar to setting the path mapping in deadline, which can be done by setting the `HQROOT` from Hqueue dashboard or `network_folders.ini` on server machine(need to restart service). 
 
 ```
-[MY_PROJECT_FOLDER] 
-windows = \\Vvox-nas-1\PROJECTS
+[HQROOT] 
+windows = //Vvox-nas-1/PROJECTS
 linux = /mnt/VVOX-NAS-1/projects
 ```
 
 `windows =` set the path to be replaced, `linux = ` set the path to be turned into. Any typo in these 2 lines will result in the path mapping not working.
 
 *Note: while adding lines in `[job_environment]` on client's `hqnode.ini` does the 2nd step of path mapping , it's recommended to set all on the server side and leave the client's `[job_environment]` blank*
+
+#### TOP HQueue Scheduler
+
+It's much easier to config in a full windows envionment. If the basic Hqueue install all goes smooth and dashboard looks fine, likely everything would work.
+
+The issues happens in mixed environment. In a typical case that artist submit job from Windows machine to Linux farm, the major issue is path mapping. While there's a thing called `PDG Path Map`, it only take response for part of the path mapping chain.
+
+When a PDG Hqueue job is submitted, firstly there's a MQ "job" created. If there's error in that MQ job indicating the path isn't mapped properly, that's HQueue server's Network Folder setting, usually can be done by setting correct `HQROOT`.
+
+After the MQ job runs successfully the actual jobs are created. This is where `PDG Path Map` take effect. Click "Load Path Map" button and make sure no duplicate path map(Not sure if it's a bug or me setting incorrectly, that button will create a duplicate line for mounted and UNC Windows path). In theory the redundancy should be handled automatically but it's not really working, and can cause ping-pong or houdini freeze directly. 
+
+*Note: The path mapping zone should left unchecked, the `*` sign doesn't really apply to "all zones whether * or WIN or LINUX", but only the `*` zone*
+
+After this you should see hython launched and scene is opened in the log.
+
+*Unsolved Issue: Linux machine doesn't any environment virables or packages. If any custom node involve will result fail to cook.* 
 
 ### Environment Variables:
 For complete environment variable list: https://www.sidefx.com/docs/houdini/ref/env.html
@@ -246,4 +262,4 @@ Then restart and choose the Xorg version of Gnome on the login screen.
         >
         >After setting ports (assuming your environment requires you to open up specific ones for this as mine did), I had to toggle on “Inherit Local Environment” for both the Task Environment and Deadline Command Environment (deadline_inheritlocalenv & deadline_cmdinheritlocalenv) and under “Job Parms” tab as for some reason the environment wasn’t right.
 
-        2025/8/21 Update: 20.5.579&611 have fix related to this issue. I haven't tested in studio yet. 
+        2025/8/21 Update: 20.5.579&611 have fixs related to this issue. I haven't tested in studio yet. 
