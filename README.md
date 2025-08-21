@@ -245,4 +245,5 @@ Then restart and choose the Xorg version of Gnome on the login screen.
         >mqrelayport
         >
         >After setting ports (assuming your environment requires you to open up specific ones for this as mine did), I had to toggle on “Inherit Local Environment” for both the Task Environment and Deadline Command Environment (deadline_inheritlocalenv & deadline_cmdinheritlocalenv) and under “Job Parms” tab as for some reason the environment wasn’t right.
-        
+
+        2025/8/21 Update: 20.5.579&611 have fix related to this issue. I haven't tested in studio yet. 
