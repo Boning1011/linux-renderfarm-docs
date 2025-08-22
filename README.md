@@ -87,7 +87,7 @@ To make sure the HQueue working properly, the two main env variables are: `HOUDI
 
 2. Make sure all machines env are properly shared and managed
 
-3. HFS Path is set correctly. *Note: Using `HOUDINI_HQUEUE_HFS_LINUX` is recommended since `HOUDINI_HQUEUE_HFS` will pass the current working HFS to Hqueue(in this case the Windows) resulting linux machine can find hython.*
+3. HFS Path is set correctly. *Note: Using `HOUDINI_HQUEUE_HFS_LINUX` is recommended since `HOUDINI_HQUEUE_HFS` will pass the current working HFS to Hqueue(in this case the Windows) resulting linux machine can't find hython.*
 
 Then TOP hqscheduler should likely work with all default parameters(on Windows clients).
 
@@ -109,7 +109,40 @@ linux = /mnt/VVOX-NAS-1/projects
 
 `windows =` set the path to be replaced, `linux = ` set the path to be turned into. Any typo in these 2 lines will result in the path mapping not working.
 
-*Note: while adding lines in `[job_environment]` on client's `hqnode.ini` does the 2nd step of path mapping , it's recommended to set all on the server side and leave the client's `[job_environment]` blank*
+>*Note: while adding lines in `[job_environment]` on client's `hqnode.ini` can do the 2nd step of path mapping , it's recommended to set that step on the server side for easier management.*
+
+##### Set Linux HQueue Client Environment (IMPORTANT)
+
+For unknown reason, I found linux HQueue client seems doesn't load any package as it should, neither `houdini.env` or dynamic way by `package_path` env.
+
+Two Solutions:
+
+1. Adding package to `HOUDINI_PATH` one by one though `[job_environment]` section (*Not* recommend, debugging only)
+
+2. Setting `HOUDINI_PACKAGE_DIR` as a system variable(Recommend). 
+    
+    Firstly:
+    
+    ```
+    sudo nano /etc/environment
+    ``` 
+
+    Then add a line:
+
+    ```
+    HOUDINI_PACKAGE_DIR="path/to/package/folder"
+    ```
+
+    Then RESTART and `echo $HOUDINI_PACKAGE_DIR` to check if added correctly.
+
+>*NOTE: Double check if the path is entered correctly. And the `HOUDINI_PACKAGE_DIR` env on windows needs to be a mounted fashion, UNC not working.*
+
+Useful Python/Hython Debugging Command:
+
+```
+import os
+print(os.environ.get("HOUDINI_PATH"))
+```
 
 #### TOP HQueue Scheduler
 
@@ -121,14 +154,16 @@ When a PDG Hqueue job is submitted, firstly there's a MQ "job" created. If there
 
 After the MQ job runs successfully the actual jobs are created. This is where `PDG Path Map` take effect. Click "Load Path Map" button and make sure no duplicate path map(Not sure if it's a bug or me setting incorrectly, that button will create a duplicate line for mounted and UNC Windows path). In theory the redundancy should be handled automatically but it's not really working, and can cause ping-pong or houdini freeze directly. 
 
-*Note: The path mapping zone should left unchecked, the `*` sign doesn't really apply to "all zones whether * or WIN or LINUX", but only the `*` zone*
+>*Note: The path mapping zone should left unchecked. The `*` sign doesn't really apply to "all zones whether * or WIN or LINUX", but only the `*` zone.*
 
 After this you should see hython launched and scene is opened in the log.
 
-*Unsolved Issue: Linux machine doesn't any environment virables or packages. If any custom node involve will result fail to cook.* 
+---
 
-### Environment Variables:
+### Houdini Environment Variables:
 For complete environment variable list: https://www.sidefx.com/docs/houdini/ref/env.html
+
+While *packages* solution is recommend for multi-user scenario, examples below is for traditional `houdini.env`
 
 **Deadline needs these lines to work (Only on Linux):**
 ```
